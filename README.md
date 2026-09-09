@@ -1,11 +1,17 @@
 ﻿# End-to-End Financial Fraud Detection System
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
-[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.3%2B-orange.svg)](https://scikit-learn.org/)
-[![Imbalanced-Learn](https://img.shields.io/badge/Imbalanced--Learn-SMOTE-red.svg)](https://imbalanced-learn.org/)
-[![Pandas](https://img.shields.io/badge/Pandas-2.0%2B-150458.svg)](https://pandas.pydata.org/)
-[![Seaborn](https://img.shields.io/badge/Seaborn-0.12%2B-navy.svg)](https://seaborn.pydata.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+<p align="left">
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python_3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/></a>
+  <a href="https://scikit-learn.org/"><img src="https://img.shields.io/badge/Scikit_Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="Scikit-Learn"/></a>
+  <a href="https://pandas.pydata.org/"><img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas"/></a>
+  <a href="https://numpy.org/"><img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white" alt="NumPy"/></a>
+  <a href="https://imbalanced-learn.org/"><img src="https://img.shields.io/badge/Imbalanced_Learn-SMOTE-E05D44?style=for-the-badge&logo=scikitlearn&logoColor=white" alt="SMOTE"/></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-419b41?style=for-the-badge&logo=open-source-initiative&logoColor=white" alt="MIT License"/></a>
+</p>
+
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=py,sklearn,pandas,numpy,git,github,vscode" alt="Tech Stack Tools" />
+</p>
 
 A complete, production-grade Machine Learning system built with **Python**, **Scikit-Learn**, **Imbalanced-Learn (SMOTE)**, and **Seaborn** to detect, evaluate, and prevent financial transaction fraud in highly imbalanced payment environments.
 
