@@ -16,25 +16,32 @@ A complete, production-grade Machine Learning system built with **Python**, **Sc
 - [Overview & Key Features](#overview--key-features)
 - [System Architecture](#system-architecture)
 - [Repository Structure](#repository-structure)
+- [Exploratory Data Analysis & Visualizations](#exploratory-data-analysis--visualizations)
+  - [1. Class Imbalance](#1-class-imbalance)
+  - [2. Fraud Distribution by Transaction Type](#2-fraud-distribution-by-transaction-type)
+  - [3. Transaction Amount Density](#3-transaction-amount-density)
+  - [4. Financial Correlation Heatmap](#4-financial-correlation-heatmap)
+- [Model Evaluation & Diagnostic Curves](#model-evaluation--diagnostic-curves)
+  - [5. Model Confusion Matrices](#5-model-confusion-matrices)
+  - [6. ROC & Precision-Recall Curves](#6-roc--precision-recall-curves)
+  - [7. Feature Importance](#7-feature-importance)
 - [Quick Start](#quick-start)
   - [1. Installation](#1-installation)
-  - [2. Run Full Training & Evaluation Pipeline](#2-run-full-training--evaluation-pipeline)
-  - [3. Run Real-Time Transaction Scoring Engine](#3-run-real-time-transaction-scoring-engine)
+  - [2. Run Full Pipeline](#2-run-full-pipeline)
+  - [3. Real-Time Transaction Inference](#3-real-time-transaction-inference)
 - [Feature Engineering & Domain Rules](#feature-engineering--domain-rules)
-- [Visual Exploratory Data Analysis & Diagnostics](#visual-exploratory-data-analysis--diagnostics)
-- [Machine Learning Models & Benchmark](#machine-learning-models--benchmark)
 - [Risk Decisioning & Action Tiers](#risk-decisioning--action-tiers)
-- [Technical Documentation Links](#technical-documentation-links)
+- [Technical Documentation](#technical-documentation)
 - [License](#license)
 
 ---
 
 ## Overview & Key Features
 
-Financial fraud detection presents unique challenges: fraudulent transactions constitute less than 2% of overall volume, while false alarms create customer friction and false negatives lead to severe monetary loss.
+Financial fraud detection presents unique challenges: fraudulent transactions constitute less than 2% of overall volume, while false alarms create customer friction and false negatives lead to direct monetary loss.
 
 This system addresses these challenges with an end-to-end architecture:
-- **Realistic Transaction Generator**: Generates 60,000+ synthetic banking transactions with realistic balance manipulation, velocity spikes, and account draining mechanisms.
+- **Realistic Transaction Engine**: Generates 60,000+ synthetic banking transactions with realistic balance manipulation, velocity spikes, and account draining mechanisms.
 - **Advanced Feature Engineering**: Extracts temporal indicators, transaction-to-balance ratios, and sender/recipient balance discrepancy flags.
 - **Severe Class Imbalance Mitigation**: Combines **SMOTE** (Synthetic Minority Over-sampling Technique) with **cost-sensitive balanced class weights**.
 - **Multi-Model Benchmark**: Evaluates and compares **Logistic Regression**, **HistGradientBoosting**, and **Random Forest Classifiers**.
@@ -89,7 +96,7 @@ fraud_detection_system/
 │   └── pipeline.py               # End-to-end orchestration pipeline
 │
 ├── artifacts/
-│   ├── plots/                    # High-resolution Seaborn plots (.png)
+│   ├── plots/                    # High-resolution Seaborn diagnostic plots (.png)
 │   │   ├── 01_class_imbalance.png
 │   │   ├── 02_fraud_by_transaction_type.png
 │   │   ├── 03_amount_distribution.png
@@ -108,8 +115,66 @@ fraud_detection_system/
 ├── main.py                       # Single command to train, evaluate & test
 ├── requirements.txt              # Project dependencies
 ├── .gitignore                    # Git ignore file
-└── README.md                     # Documentation & usage manual
+├── LICENSE                       # MIT License
+└── README.md                     # Documentation & visual report
 ```
+
+---
+
+## Exploratory Data Analysis & Visualizations
+
+### 1. Class Imbalance
+The dataset reflects realistic payment environments where fraudulent transactions represent a minute fraction of overall volume.
+
+<p align="center">
+  <img src="artifacts/plots/01_class_imbalance.png" alt="Class Imbalance Distribution" width="750"/>
+</p>
+
+### 2. Fraud Distribution by Transaction Type
+Analysis confirms that attackers concentrate fraud exclusively on capital liquidation vectors: **`TRANSFER`** and **`CASH_OUT`**.
+
+<p align="center">
+  <img src="artifacts/plots/02_fraud_by_transaction_type.png" alt="Fraud by Transaction Type" width="750"/>
+</p>
+
+### 3. Transaction Amount Density
+Kernel Density Estimation (KDE) demonstrating that legitimate transactions cluster in micro-to-medium payments, whereas fraudulent attempts exhibit right-skewed heavy-tailed values.
+
+<p align="center">
+  <img src="artifacts/plots/03_amount_distribution.png" alt="Transaction Amount Distribution" width="750"/>
+</p>
+
+### 4. Financial Correlation Heatmap
+Correlation analysis highlighting strong predictive relationships between engineered balance errors (`orig_error_balance`, `dest_error_balance`), transaction amounts, and the fraud target.
+
+<p align="center">
+  <img src="artifacts/plots/04_correlation_heatmap.png" alt="Correlation Heatmap" width="750"/>
+</p>
+
+---
+
+## Model Evaluation & Diagnostic Curves
+
+### 5. Model Confusion Matrices
+Comparative confusion matrix analysis across candidate models (**Logistic Regression**, **Random Forest**, and **HistGradientBoosting**), measuring True Positives, False Positives, and False Negatives.
+
+<p align="center">
+  <img src="artifacts/plots/05_confusion_matrices.png" alt="Model Confusion Matrices" width="850"/>
+</p>
+
+### 6. ROC & Precision-Recall Curves
+Precision-Recall and ROC curves demonstrating model discriminatory capability across the full threshold spectrum.
+
+<p align="center">
+  <img src="artifacts/plots/06_roc_and_pr_curves.png" alt="ROC and Precision-Recall Curves" width="850"/>
+</p>
+
+### 7. Feature Importance
+Gini impurity-based feature importance ranking from the Random Forest ensemble, showing that engineered balance discrepancy features are the strongest discriminators.
+
+<p align="center">
+  <img src="artifacts/plots/07_feature_importance.png" alt="Feature Importance Ranking" width="750"/>
+</p>
 
 ---
 
@@ -125,7 +190,7 @@ cd fraud-detection-system
 pip install -r requirements.txt
 ```
 
-### 2. Run Full Training & Evaluation Pipeline
+### 2. Run Full Pipeline
 
 Execute the end-to-end pipeline (generates data, runs EDA, trains models, plots evaluation curves, and saves the trained bundle):
 
@@ -133,7 +198,7 @@ Execute the end-to-end pipeline (generates data, runs EDA, trains models, plots 
 python main.py
 ```
 
-### 3. Run Real-Time Transaction Scoring Engine
+### 3. Real-Time Transaction Inference
 
 Score live sample transactions and observe risk-tier classification:
 
@@ -187,22 +252,6 @@ The feature pipeline calculates banking domain features:
 
 ---
 
-## Visual Exploratory Data Analysis & Diagnostics
-
-All charts are saved into `artifacts/plots/`:
-
-| Artifact | Description |
-| :--- | :--- |
-| **`01_class_imbalance.png`** | Demonstrates the acute class imbalance between legitimate and fraud cases. |
-| **`02_fraud_by_transaction_type.png`** | Pinpoints high-risk fraud channels (`TRANSFER` and `CASH_OUT`). |
-| **`03_amount_distribution.png`** | Seaborn KDE density plot comparing legitimate vs fraud amounts. |
-| **`04_correlation_heatmap.png`** | Correlation matrix between balance errors, amounts, and fraud labels. |
-| **`05_confusion_matrices.png`** | Side-by-side confusion matrices for all evaluated models. |
-| **`06_roc_and_pr_curves.png`** | Precision-Recall & ROC curves benchmark. |
-| **`07_feature_importance.png`** | Top predictive features according to the Random Forest ensemble. |
-
----
-
 ## Risk Decisioning & Action Tiers
 
 The decision engine routes transactions based on calibrated risk probability thresholds:
@@ -215,9 +264,9 @@ The decision engine routes transactions based on calibrated risk probability thr
 
 ---
 
-## Technical Documentation Links
+## Technical Documentation
 
-For more in-depth architectural and developer documentation, explore:
+For deeper architectural and developer documentation, explore:
 - [System Architecture Guide](docs/ARCHITECTURE.md) — Comprehensive technical architecture, pipelines, and mathematical formulations.
 - [API Reference](docs/API_REFERENCE.md) — Module and function specifications with parameters and returns.
 - [Evaluation & Diagnostics Report](docs/EVALUATION.md) — Model metrics, diagnostic plots, and PR curve interpretations.
